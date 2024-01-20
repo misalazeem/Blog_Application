@@ -21,9 +21,12 @@ const handler = nextAuth({
           // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
           // You can also use the `req` object to obtain additional parameters
           // (i.e., the request IP address)
-          const res = await fetch("/your/endpoint", {
+          const res = await fetch("/api/login", {
             method: 'POST',
-            body: JSON.stringify(credentials),
+            body: JSON.stringify({
+              username: credentials?.username,
+              password: credentials?.password
+            }),
             headers: { "Content-Type": "application/json" }
           })
           const user = await res.json()
