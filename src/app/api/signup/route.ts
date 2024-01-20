@@ -10,11 +10,12 @@ interface RequestBody {
 export async function POST(request: Request) {
   const body: RequestBody = await request.json();
 
+  const hashedPassword = await bcrypt.hash(body.password, 10);
   const user = await prisma.user.create({
     data: {
       username: body.username,
       email: body.email,
-      hash: await bcrypt.hash(body.password, 10)
+      hash: hashedPassword
     }
   })
 
