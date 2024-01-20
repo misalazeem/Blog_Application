@@ -4,6 +4,7 @@ import * as bcrypt from 'bcrypt';
 interface RequestBody {
   username: string;
   password: string;
+  name: string;
   email: string;
 }
 
@@ -15,6 +16,7 @@ export async function POST(request: Request) {
     data: {
       username: body.username,
       email: body.email,
+      name: body.name,
       hash: hashedPassword
     }
   })

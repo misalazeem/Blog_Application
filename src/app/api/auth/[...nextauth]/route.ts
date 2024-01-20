@@ -1,7 +1,8 @@
-import nextAuth from "next-auth";
+import NextAuth from "next-auth";
+import nextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials"
 
-const handler = nextAuth({
+export const authOptions: AuthOptions = ({
   providers: [
     CredentialsProvider({
         // The name to display on the sign in form (e.g. 'Sign in with...')
@@ -21,7 +22,7 @@ const handler = nextAuth({
           // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
           // You can also use the `req` object to obtain additional parameters
           // (i.e., the request IP address)
-          const res = await fetch("/api/login", {
+          const res = await fetch("http://localhost:3000/api/login", {
             method: 'POST',
             body: JSON.stringify({
               username: credentials?.username,
@@ -29,9 +30,7 @@ const handler = nextAuth({
             }),
             headers: { "Content-Type": "application/json" }
           })
-          
           const user = await res.json()
-    
           // If no error and we have user data, return it
           if (res.ok && user) {
             return user
@@ -40,7 +39,14 @@ const handler = nextAuth({
           return null
         }
       })
-  ]
+  ],
+
+  session: {
+    strategy: "jwt"
+  },
+  secret: process.env.NEXTAUTH_SECRET
 });
+
+const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST}
