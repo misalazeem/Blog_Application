@@ -4,7 +4,7 @@ import React, { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { register } from "@/lib/authApi";
 import Input from "@/app/components/Input/Input";
-import Button from "../components/Button/Button";
+import Button from "../Button/Button";
 
 interface RegisterFormProps {
   username: string;
@@ -67,7 +67,7 @@ const Register = () => {
 
   return (
     <form className="text-center" onSubmit={submitForm}>
-      <div className="flex flex-col w-[50%] justify-center mx-auto gap-2">
+      <div className="flex flex-col w-[90%] justify-center mx-auto gap-2">
         <Input
           placeholder="Name"
           id="name"
