@@ -16,7 +16,10 @@ interface BlogData {
 }
 
 const Page = () => {
-  const user = JSON.parse(localStorage.getItem("user") as string) || {};
+  let user:any = null;
+  if (typeof window !== 'undefined') {
+    user = JSON.parse(localStorage.getItem("user") as string) || {};
+  }
   const [blogData, setBlogData] = useState<BlogData[] | null>(null);
 
   
