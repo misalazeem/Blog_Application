@@ -11,7 +11,8 @@ export const createBlog = async (blogData: FormData) => {
 };
 
 export const getAllBlogs = async (categoryFilter:string, currentPage:string) => {
-  console.log("here");
+  console.log("categoryfilter", categoryFilter);
+  console.log("currentPage", currentPage);
   try {
     // Prepare query parameters
     const queryParams = new URLSearchParams();
@@ -26,6 +27,7 @@ export const getAllBlogs = async (categoryFilter:string, currentPage:string) => 
     const url = `/post${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
 
     // Make the GET request
+    console.log(url);
     const response = await axiosInstance.get(url);
     return response.data;
   } catch (error:any) {
