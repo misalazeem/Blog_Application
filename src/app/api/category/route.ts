@@ -1,29 +1,22 @@
 import prisma from "@/lib/prisma";
-import getCurrentUser from "@/app/actions/getCurrentUser";
 
 interface RequestBody {
   name: string;
 }
 
 export async function GET() {
-  const user = await getCurrentUser();
+  try {
+    const categories = await prisma.category.findMany({
+      select: {
+        name: true,
+      },
+    });
 
-  if (user) {
-    try {
-      const categories = await prisma.category.findMany({
-        select: {
-          name: true,
-        },
-      });
+    const categoryNames = categories.map((category) => category.name);
 
-      const categoryNames = categories.map((category) => category.name);
-
-      return new Response(JSON.stringify({ success: true, data: categoryNames }));
-    } catch (error) {
-      return new Response(JSON.stringify({ success: false, message: "Internal Server Error" }));
-    }
-  } else {
-    return new Response(JSON.stringify({ success: false, message: "Sign in to access this endpoint" }));
+    return new Response(JSON.stringify({ success: true, data: categoryNames }));
+  } catch (error) {
+    return new Response(JSON.stringify({ success: false, message: "Internal Server Error" }));
   }
 }
 

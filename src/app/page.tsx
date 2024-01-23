@@ -1,8 +1,11 @@
+// Page.tsx
+
 "use client";
 
 import { getAllBlogs, getCategories } from "@/lib/blogApi";
 import React, { useEffect, useState } from "react";
 import BlogPost from "./components/BlogPost/BlogPost";
+import Loading from "./components/Loading/Loading";
 
 interface BlogData {
   id: string;
@@ -10,7 +13,7 @@ interface BlogData {
   categories: string[];
   content: string;
   imageUrl: string;
-  author: {name: string};
+  author: { name: string };
   createdAt: Date;
 }
 
@@ -20,10 +23,13 @@ const Page = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [categories, setCategories] = useState<string[]>([]);
   const [hasMorePages, setHasMorePages] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
+
         const categoriesData = await getCategories();
         if (categoriesData && categoriesData.success) {
           setCategories(categoriesData.data);
@@ -31,6 +37,7 @@ const Page = () => {
 
         const pagenumber: string = currentPage.toString();
         const data = await getAllBlogs(categoryFilter || '', pagenumber || '');
+
         if (data && data.data) {
           setBlogData(data.data);
           setHasMorePages(data.data.length >= 3);
@@ -40,6 +47,8 @@ const Page = () => {
           }
         }
       } catch (error) {
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -48,6 +57,10 @@ const Page = () => {
 
   return (
     <>
+      {loading ? (
+        <div className="flex flex-col justify-between items-center"> <Loading /> </div>
+        ) : (
+          <>
       <div className="flex flex-col items-center w-[80vw] mx-auto py-8 gap-4">
         <select
           onChange={(e) => setCategoryFilter(e.target.value || null)}
@@ -66,30 +79,33 @@ const Page = () => {
           ))}
         </select>
 
-        {blogData &&
-          blogData.map((blog) => <BlogPost key={blog.id} blog={blog} />)}
+        
+            {blogData &&
+              blogData.map((blog) => <BlogPost key={blog.id} blog={blog} />)}
 
-        <div className="flex justify-between w-full mt-4">
-          <button
-            onClick={() =>
-              setCurrentPage((prevPage) => Math.max(1, prevPage - 1))
-            }
-            disabled={currentPage === 1}
-          >
-            Previous
-          </button>
-          <button
-            onClick={() =>
-              setCurrentPage((prevPage) =>
-                hasMorePages ? prevPage + 1 : prevPage
-              )
-            }
-            disabled={!hasMorePages}
-          >
-            Next
-          </button>
-        </div>
+            <div className="flex justify-between w-full mt-4">
+              <button
+                onClick={() =>
+                  setCurrentPage((prevPage) => Math.max(1, prevPage - 1))
+                }
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
+              <button
+                onClick={() =>
+                  setCurrentPage((prevPage) =>
+                    hasMorePages ? prevPage + 1 : prevPage
+                  )
+                }
+                disabled={!hasMorePages}
+              >
+                Next
+              </button>
+            </div>                  
       </div>
+      </>
+      )}
     </>
   );
 };
