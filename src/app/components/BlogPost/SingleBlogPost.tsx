@@ -41,7 +41,9 @@ const SingleBlogPost: React.FC<SingularBlogPostProps> = ({ blog }) => {
             </span>
           ))}
         </div>
-        <div className="mt-4" dangerouslySetInnerHTML={{ __html: content }} />
+        <div className="mt-2" style={{ whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}>
+          <div dangerouslySetInnerHTML={{ __html: content?.slice(0, 350) + '...' }} />
+        </div>
       </div>
     </div>
   );
