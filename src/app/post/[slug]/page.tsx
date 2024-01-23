@@ -20,8 +20,6 @@ export default function Page({ params }: { params: { slug: string } }) {
     fetchData();
   }, [params.slug]);
 
-  console.log(response);
-
   return (
     <div className="py-8">
       <SingleBlogPost blog={response} />
