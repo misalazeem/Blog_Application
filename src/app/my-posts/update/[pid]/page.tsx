@@ -9,7 +9,7 @@ export default function UpdateBlogPost({ params }: { params: { pid: string } }) 
   let user:any;
 
   if (typeof window !== 'undefined') {
-    user = JSON.parse(localStorage.getItem("user") as string);
+    user = JSON.parse(localStorage.getItem("user") as string) || null;
   }
   const [response, setResponse] = useState<any>(null);
   const [customMessage, setCustomMessage] = useState<string | null>(null);
@@ -25,7 +25,6 @@ export default function UpdateBlogPost({ params }: { params: { pid: string } }) 
             router.push('/');
           }
         } else {
-          // Redirect to the login page if the user is not authenticated
           router.push('/auth');
         }
       } catch (error) {
@@ -38,10 +37,8 @@ export default function UpdateBlogPost({ params }: { params: { pid: string } }) 
 
   const handleUpdate = async (formData: any) => {
     try {
-      // Ensure user is authenticated before updating
       if (user) {
         const response = await updateBlog(formData, params.pid);
-        console.log(response);  
         if (response.success) {
           setCustomMessage('Post Updated Successfully');
           setResponse(null);
@@ -52,7 +49,6 @@ export default function UpdateBlogPost({ params }: { params: { pid: string } }) 
           setCustomMessage('Something Went Wrong');
         }
       } else {
-        // Redirect to the login page if the user is not authenticated
         router.push('/auth');
       }
     } catch (error) {

@@ -168,7 +168,6 @@ export async function GET(request: NextRequest, response: NextResponse) {
     if (!queryParams.get("category")) {
       const page = queryParams.get('page');
       const skippost = page ? (+page - 1) * 3 : 0;
-
       const posts = await prisma.post.findMany({
         where: {
           published: true,

@@ -1,22 +1,26 @@
 "use client"
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CreateOrEditPost from "@/app/components/BlogPost/CreateOrEditPost";
 import { createBlog } from "@/lib/blogApi";
 import { useRouter } from 'next/navigation';
 
 export default function CreatePost() {
-  let user:any;
-
-  if (typeof window !== 'undefined') {
-    user = JSON.parse(localStorage.getItem("user") as string);
-  }
   const router = useRouter();
-  if (!user) {
-    router.push('/');
-  }
-
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<any | null>(null);
   const [customMessage, setCustomMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedUser = JSON.parse(localStorage.getItem("user") as string) || null;
+      setUser(storedUser);
+      setLoading(false);
+      if ( !storedUser ) {                
+        router.push('/');
+      }
+    }
+  }, []);
 
   const handleSubmit = async (formData: any) => {
     try {
@@ -34,19 +38,19 @@ export default function CreatePost() {
         router.push('/login');
       }
     } catch (error) {
-      console.error('Error creating blog:', error);
       setCustomMessage('Error creating blog');
     }
   };
 
   return (
     <div>
-      {customMessage && (
+      {loading && <p>Loading...</p>}
+      {!loading && customMessage && (
         <div className="custom-message-sticky p-4 bg-green-500 text-white sticky top-0 z-10">
           {customMessage}
         </div>
       )}
-      {!customMessage && <CreateOrEditPost onSubmit={handleSubmit} />}
+      {!loading && !customMessage && <CreateOrEditPost onSubmit={handleSubmit} />}
     </div>
   );
 }

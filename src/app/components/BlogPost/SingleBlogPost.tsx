@@ -1,5 +1,7 @@
 import React from "react";
 import Head from "next/head";
+import Link from "next/link";
+import Loading from "../Loading/Loading";
 
 interface SingularBlogPostProps {
   blog: {
@@ -14,7 +16,7 @@ interface SingularBlogPostProps {
 
 const SingleBlogPost: React.FC<SingularBlogPostProps> = ({ blog }) => {
   if (!blog) {
-    return <div>Loading...</div>;
+    return <div><Loading /></div>;
   }
 
   const { title, categories, content, imageUrl, author, createdAt } = blog;
@@ -25,7 +27,10 @@ const SingleBlogPost: React.FC<SingularBlogPostProps> = ({ blog }) => {
         <title>{title}</title>
         <meta name="description" content={content.slice(0, 150) + '...'} />
       </Head>
-      <img className="w-full h-96 object-cover object-center rounded" src={imageUrl} alt={title} />
+      <Link className="text-blue-500 underline cursor-pointer focus:outline-none" href="/">
+          Back to Blogs
+      </Link>
+      <img className="w-full h-96 object-cover mt-4 object-center rounded" src={imageUrl} alt={title} />
       <div className="mt-4">
         <h1 className="text-3xl font-bold">{title}</h1>
         <div className="text-gray-600 text-sm mt-2">
@@ -41,7 +46,9 @@ const SingleBlogPost: React.FC<SingularBlogPostProps> = ({ blog }) => {
             </span>
           ))}
         </div>
-        <div className="mt-4" dangerouslySetInnerHTML={{ __html: content }} />
+        <div className="mt-2" style={{ whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}>
+          <div className="mt-4" dangerouslySetInnerHTML={{ __html: content }} />
+        </div>
       </div>
     </div>
   );

@@ -18,7 +18,6 @@ interface BlogPostProps {
 }
 
 const BlogPost: React.FC<BlogPostProps> = ({ blog }) => {
-  // Check if blog is null
   if (!blog) {
     return null;
   }
@@ -26,15 +25,15 @@ const BlogPost: React.FC<BlogPostProps> = ({ blog }) => {
   const { title, categories, content, imageUrl, author, createdAt } = blog;
 
   return (
-    <div>
+    <div className="max-w-[80%] transition-opacity duration-500 ease-in-out">
       <Head>
         <title>{title}</title>
         <meta name="description" content={content?.slice(0, 150) + '...'} />
       </Head>
       <Link href={`/post/${encodeURIComponent(blog.title.replace(/\s+/g, '-'))}`}>
-        <div className="flex flex-col lg:flex-row justify-between p-4 border border-gray-300 rounded shadow-md">
+        <div className="flex flex-col w-auto max-w-[100vw] lg:flex-row justify-between p-4 border border-gray-300 rounded shadow-md transition-transform duration-300 transform hover:scale-105">
           <div className="lg:w-1/2 mb-4 lg:mb-0 lg:mr-4">
-            <img className="w-full h-auto object-cover rounded" src={imageUrl} alt={title} />
+            <img className="w-full h-auto object-cover rounded transition-transform duration-300 transform hover:scale-105" src={imageUrl} alt={title} />
           </div>
           <div className="lg:w-1/2">
             <h4 className="text-xl font-semibold mb-2">{title}</h4>
@@ -46,9 +45,11 @@ const BlogPost: React.FC<BlogPostProps> = ({ blog }) => {
                 </span>
               ))}
             </div>
-            <div className="mt-2" dangerouslySetInnerHTML={{ __html: content?.slice(0, 350) + '...' }} />
+            <div className="mt-2" style={{ whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}>
+              <div dangerouslySetInnerHTML={{ __html: content?.slice(0, 350) + '...' }} />
+            </div>
             <Link
-              className="text-blue-500 underline mt-2 cursor-pointer focus:outline-none"
+              className="text-blue-500 underline mt-2 cursor-pointer focus:outline-none transition-colors duration-300 hover:text-indigo-700"
               href={`/post/${encodeURIComponent(blog.title.replace(/\s+/g, '-'))}`}
             >
               Read More

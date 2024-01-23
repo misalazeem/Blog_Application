@@ -16,7 +16,10 @@ interface BlogData {
 }
 
 const Page = () => {
-  const user = JSON.parse(localStorage.getItem("user") as string);
+  let user:any = null;
+  if (typeof window !== 'undefined') {
+    user = JSON.parse(localStorage.getItem("user") as string) || {};
+  }
   const [blogData, setBlogData] = useState<BlogData[] | null>(null);
 
   
@@ -24,7 +27,6 @@ const Page = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(user);
         if (user) {
           const data = await getMyPosts();
           setBlogData(data.data);
@@ -36,16 +38,10 @@ const Page = () => {
     };
 
     fetchData();
-  }, [user]);
+  }, []);
 
   const handleDelete = async (id: string) => {
     const response = deletePost(id);
-    console.log(response);
-  };
-
-  const handleUpdate = async (id: string) => {
-    // Call the update function with the id
-    console.log(`Updating blog with id: ${id}`);
   };
 
   if (!user) {

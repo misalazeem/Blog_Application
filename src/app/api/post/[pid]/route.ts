@@ -117,7 +117,6 @@ export async function PUT(
       return new Response(JSON.stringify({ success: false, message: "Error Updating Post" }));
     }
   } catch (error) {
-    console.error('Error updating post:', error);
     return new Response(JSON.stringify({ success: false, message: "Invalid request body" }));
   }
 }

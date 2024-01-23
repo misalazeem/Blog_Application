@@ -106,41 +106,42 @@ const CreateOrEditPost: React.FC<CreateOrEditPostProps> = ({ blog, onSubmit }) =
 
   const submitForm = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Validation checks
     const errors: { title?: string; content?: string; categories?: string; imageUrl?: string; } = {};
-
+  
     if (!postForm.title.trim()) {
       errors.title = 'Title is required';
     }
-
+  
     if (!postContent.trim()) {
       errors.content = 'Content is required';
     }
-
+  
     if (selectedCategories.length === 0) {
       errors.categories = 'Select at least one category';
     }
-
+  
     if (!postForm.imageUrl) {
-      errors.imageUrl = "Upload an image";
+      errors.imageUrl = 'Upload an image';
     }
-
+  
     setValidationErrors(errors);
-
-    const formData = new FormData();
-    formData.append('title', postForm.title);
-    formData.append('content', postContent);
-    formData.append('published', isPublished.toString());
-    formData.append('imageUrl', postForm.imageUrl);
-    selectedCategories.forEach((category) => {
-      formData.append('categories[]', category);
-    });
-
-    try {
-      await onSubmit(formData);
-    } catch (error) {
-      console.error('Error submitting form:', error);
+  
+    // Check if there are any validation errors
+    if (Object.keys(errors).length === 0) {
+      const formData = new FormData();
+      formData.append('title', postForm.title);
+      formData.append('content', postContent);
+      formData.append('published', isPublished.toString());
+      formData.append('imageUrl', postForm.imageUrl);
+      selectedCategories.forEach((category) => {
+        formData.append('categories[]', category);
+      });
+  
+      try {
+        await onSubmit(formData);
+      } catch (error) {
+        console.error('Error submitting form:', error);
+      }
     }
   };
 
