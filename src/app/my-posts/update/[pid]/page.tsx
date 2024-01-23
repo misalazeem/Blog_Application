@@ -25,7 +25,6 @@ export default function UpdateBlogPost({ params }: { params: { pid: string } }) 
             router.push('/');
           }
         } else {
-          // Redirect to the login page if the user is not authenticated
           router.push('/auth');
         }
       } catch (error) {
@@ -38,7 +37,6 @@ export default function UpdateBlogPost({ params }: { params: { pid: string } }) 
 
   const handleUpdate = async (formData: any) => {
     try {
-      // Ensure user is authenticated before updating
       if (user) {
         const response = await updateBlog(formData, params.pid);
         if (response.success) {
@@ -51,7 +49,6 @@ export default function UpdateBlogPost({ params }: { params: { pid: string } }) 
           setCustomMessage('Something Went Wrong');
         }
       } else {
-        // Redirect to the login page if the user is not authenticated
         router.push('/auth');
       }
     } catch (error) {

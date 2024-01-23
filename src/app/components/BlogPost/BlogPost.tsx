@@ -18,7 +18,6 @@ interface BlogPostProps {
 }
 
 const BlogPost: React.FC<BlogPostProps> = ({ blog }) => {
-  // Check if blog is null
   if (!blog) {
     return null;
   }
