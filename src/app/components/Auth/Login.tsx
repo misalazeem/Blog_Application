@@ -1,10 +1,9 @@
 'use client'
 
 import Input from "@/app/components/Input/Input";
-import Button from "../components/Button/Button";
+import Button from "../Button/Button";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
-import { login } from "@/lib/authApi";
 import { signIn } from "next-auth/react";
 
 interface LoginFormProps {
@@ -61,7 +60,7 @@ const Login = () => {
   
     return (
       <form className="text-center" onSubmit={submitForm}>
-        <div className="flex flex-col w-[50%] justify-center mx-auto gap-2">
+        <div className="flex flex-col w-[90%] justify-center mx-auto gap-2">
           <Input
             placeholder='Username'
             id='username'

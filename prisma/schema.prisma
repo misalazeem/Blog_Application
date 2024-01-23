@@ -11,22 +11,36 @@ datasource db {
 }
 
 model Post {
-  id        String     @default(cuid()) @id
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  String?
+  id          String      @default(cuid()) @id
+  title       String
+  content     String?  
+  imageUrl    String?
+  published   Boolean     @default(false)
+  author      User?       @relation(fields: [authorId], references: [id])
+  authorId    String?
+  createdAt   DateTime    @default(now()) @map(name: "created_at")
+  updatedAt   DateTime    @updatedAt @map(name: "updated_at")
+  categories  Category[]
 }
 
 model User {
-  id            String       @default(cuid()) @id
-  name          String?
-  email         String?   @unique
-  username      String?   @unique
+  id            String     @default(cuid()) @id
+  name          String
+  email         String    @unique
+  username      String    @unique
   hash          String
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  createdAt     DateTime   @default(now()) @map(name: "created_at")
+  updatedAt     DateTime   @updatedAt @map(name: "updated_at")
   posts         Post[]
   @@map(name: "users")
+}
+
+model Category {
+  id          String     @default(cuid()) @id
+  name        String     @unique
+  description String?
+  posts       Post[]
+  createdAt   DateTime   @default(now()) @map(name: "created_at")
+  updatedAt   DateTime   @updatedAt @map(name: "updated_at")
+  @@map(name: "categories")
 }
