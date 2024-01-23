@@ -48,11 +48,12 @@ const Login = () => {
     }
 
     try {
+        console.log(loginForm);
         const callback = await signIn('credentials', {
         ...loginForm,
         redirect: false,
         });
-
+        console.log(callback);
         if (callback?.ok) {
         router.push('/');
         } else if (callback?.error) {
