@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 
 export default function UpdateBlogPost({ params }: { params: { pid: string } }) {
   let user:any;
-
   if (typeof window !== 'undefined') {
     user = JSON.parse(localStorage.getItem("user") as string) || null;
   }
