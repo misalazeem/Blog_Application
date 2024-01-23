@@ -52,8 +52,9 @@ const Register = () => {
         const response = await register(registerForm);
 
         if (response) {
+          console.log(response);
           setTimeout(() => {
-            router.push('/auth');
+            router.push('/');
           });
         } else {
           setErrorMessage("Username or email already taken");
