@@ -27,7 +27,6 @@ const Page = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(user);
         if (user) {
           const data = await getMyPosts();
           setBlogData(data.data);
@@ -43,7 +42,6 @@ const Page = () => {
 
   const handleDelete = async (id: string) => {
     const response = deletePost(id);
-    console.log(response);
   };
 
   if (!user) {

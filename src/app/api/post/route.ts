@@ -162,17 +162,12 @@ async function createNewPost(user: any, body: any) {
 }
 
 export async function GET(request: NextRequest, response: NextResponse) {
-  console.log('here');
   const queryString = request.url.split('?')[1];
   const queryParams = new URLSearchParams(queryString);
-  console.log(queryString);
   try {
     if (!queryParams.get("category")) {
-      console.log('hey');
       const page = queryParams.get('page');
       const skippost = page ? (+page - 1) * 3 : 0;
-      console.log(page);
-      console.log(skippost);
       const posts = await prisma.post.findMany({
         where: {
           published: true,
@@ -196,7 +191,6 @@ export async function GET(request: NextRequest, response: NextResponse) {
         skip: skippost,
         take: 3,
       });
-      console.log(posts);
 
       const postsWithAuthorAndCategoryNames = posts.map((post) => ({
         ...post,

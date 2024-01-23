@@ -31,7 +31,6 @@ const Page = () => {
 
         const pagenumber: string = currentPage.toString();
         const data = await getAllBlogs(categoryFilter || '', pagenumber || '');
-        console.log(data);
         if (data && data.data) {
           setBlogData(data.data);
           setHasMorePages(data.data.length >= 3);
@@ -41,7 +40,6 @@ const Page = () => {
           }
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
       }
     };
 

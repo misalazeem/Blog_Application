@@ -41,7 +41,6 @@ export default function UpdateBlogPost({ params }: { params: { pid: string } }) 
       // Ensure user is authenticated before updating
       if (user) {
         const response = await updateBlog(formData, params.pid);
-        console.log(response);  
         if (response.success) {
           setCustomMessage('Post Updated Successfully');
           setResponse(null);

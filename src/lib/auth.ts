@@ -32,11 +32,9 @@ export const authOptions: AuthOptions = ({
                 headers: { "Content-Type": "application/json" }
               })
               const user = await res.json()
-              // If no error and we have user data, return it
               if (res.ok && user) {
                 return user
               }
-              // Return null if user data could not be retrieved
               return null
           } catch (err) {
             throw new Error('Next Auth - Authorize: Authentication error');
