@@ -14,13 +14,12 @@ interface BlogData {
   createdAt: Date;
 }
 
-const Home = () => {
+const Page = () => {
   const [blogData, setBlogData] = useState<BlogData[] | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [categories, setCategories] = useState<string[]>([]);
   const [hasMorePages, setHasMorePages] = useState<boolean>(true);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,9 +50,14 @@ const Home = () => {
       <div className="flex flex-col items-center w-[80vw] mx-auto py-8 gap-4">
         <select
           onChange={(e) => setCategoryFilter(e.target.value || null)}
-          defaultValue=""
+          value={categoryFilter || ""}
         >
-          <option value="" disabled>Select Category</option>
+          <option value="" disabled>
+            Select Category
+          </option>
+          <option value="" onClick={() => setCategoryFilter(null)}>
+            All Categories
+          </option>
           {categories.map((category) => (
             <option key={category} value={category}>
               {category}
@@ -89,4 +93,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Page;
