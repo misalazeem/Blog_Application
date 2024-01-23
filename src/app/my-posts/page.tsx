@@ -16,7 +16,7 @@ interface BlogData {
 }
 
 const Page = () => {
-  const user = JSON.parse(localStorage.getItem("user") as string);
+  const user = JSON.parse(localStorage.getItem("user") as string) || {};
   const [blogData, setBlogData] = useState<BlogData[] | null>(null);
 
   
@@ -41,11 +41,6 @@ const Page = () => {
   const handleDelete = async (id: string) => {
     const response = deletePost(id);
     console.log(response);
-  };
-
-  const handleUpdate = async (id: string) => {
-    // Call the update function with the id
-    console.log(`Updating blog with id: ${id}`);
   };
 
   if (!user) {

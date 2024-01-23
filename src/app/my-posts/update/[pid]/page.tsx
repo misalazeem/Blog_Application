@@ -9,7 +9,7 @@ export default function UpdateBlogPost({ params }: { params: { pid: string } }) 
   let user:any;
 
   if (typeof window !== 'undefined') {
-    user = JSON.parse(localStorage.getItem("user") as string);
+    user = JSON.parse(localStorage.getItem("user") as string) || null;
   }
   const [response, setResponse] = useState<any>(null);
   const [customMessage, setCustomMessage] = useState<string | null>(null);

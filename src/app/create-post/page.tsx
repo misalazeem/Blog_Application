@@ -1,16 +1,17 @@
 "use client"
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CreateOrEditPost from "@/app/components/BlogPost/CreateOrEditPost";
 import { createBlog } from "@/lib/blogApi";
 import { useRouter } from 'next/navigation';
 
 export default function CreatePost() {
   let user:any;
-
+  
   if (typeof window !== 'undefined') {
-    user = JSON.parse(localStorage.getItem("user") as string);
+    user = JSON.parse(localStorage.getItem("user") as string) || null;
   }
+
   const router = useRouter();
   if (!user) {
     router.push('/');
@@ -34,7 +35,6 @@ export default function CreatePost() {
         router.push('/login');
       }
     } catch (error) {
-      console.error('Error creating blog:', error);
       setCustomMessage('Error creating blog');
     }
   };
