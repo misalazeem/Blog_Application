@@ -31,11 +31,14 @@ const Page = () => {
 
         const pagenumber: string = currentPage.toString();
         const data = await getAllBlogs(categoryFilter || '', pagenumber || '');
-        setBlogData(data.data);
-        setHasMorePages(data.data.length >= 3);
 
-        if (data.data.length === 0 && currentPage > 1) {
-          setCurrentPage((prevPage) => prevPage - 1);
+        if (data && data.data) {
+          setBlogData(data.data);
+          setHasMorePages(data.data.length >= 3);
+
+          if (data.data.length === 0 && currentPage > 1) {
+            setCurrentPage((prevPage) => prevPage - 1);
+          }
         }
       } catch (error) {
         console.error('Error fetching data:', error);
