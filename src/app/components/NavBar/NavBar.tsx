@@ -19,6 +19,7 @@ const NavBar = ({ currentUser }: UserMenuProps) => {
   if (typeof window !== 'undefined' && currentUser) {
     localStorage.setItem("user", JSON.stringify(currentUser));
   }
+  console.log(currentUser);
 
   const handleSignout = () => {
     localStorage.clear();
