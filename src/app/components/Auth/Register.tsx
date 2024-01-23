@@ -52,7 +52,6 @@ const Register = () => {
         const response = await register(registerForm);
 
         if (response) {
-          console.log(response);
           setTimeout(() => {
             router.push('/');
           });

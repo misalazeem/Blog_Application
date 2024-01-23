@@ -1,5 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials"
 import { AuthOptions } from "next-auth";
+const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
 
 export const authOptions: AuthOptions = ({
   providers: [
@@ -22,7 +23,7 @@ export const authOptions: AuthOptions = ({
           // You can also use the `req` object to obtain additional parameters
           // (i.e., the request IP address)
           try {
-            const res = await fetch("http://localhost:3000/api/login", {
+            const res = await fetch(`${baseUrl}/login`, {
                 method: 'POST',
                 body: JSON.stringify({
                   username: credentials?.username,
