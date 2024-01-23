@@ -3,6 +3,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { signOut } from "next-auth/react";
+import { useRouter } from 'next/navigation'
 
 interface UserMenuProps {
   currentUser: {
@@ -17,6 +18,7 @@ interface UserMenuProps {
 
 const NavBar = ({ currentUser }: UserMenuProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -34,7 +36,7 @@ const NavBar = ({ currentUser }: UserMenuProps) => {
 
   const handleSignout = () => {
     localStorage.clear();
-    signOut();
+    signOut();   
   };
 
   return (

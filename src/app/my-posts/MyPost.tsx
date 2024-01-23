@@ -17,50 +17,34 @@ interface BlogData {
 }
 
 const MyPosts = () => {
-  const [user, setUser] = useState<any | null>(null);
+  let user:any = null;
+  if (typeof window !== 'undefined') {
+    user = JSON.parse(localStorage.getItem("user") as string) || {};
+  }
   const [blogData, setBlogData] = useState<BlogData[] | null>(null);
   const router = useRouter();
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storedUser = JSON.parse(localStorage.getItem("user") as string) || null;
-      setUser(storedUser);      
-      if ( !storedUser ) {                
-        router.push('/');
-      }
-    }
-  }, []);
-
-
-  useEffect(() => {
     const fetchData = async () => {
       try {
-        if (user) {
-          const data = await getMyPosts();
-          setBlogData(data.data);
-        } else {
+        if (!user) {
+          router.push('/');
         }
+        const data = await getMyPosts();
+        setBlogData(data.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-
     fetchData();
   }, []);
 
   const handleDelete = async (id: string) => {
+    if(!user) {
+      router.push('/');
+    }
     const response = deletePost(id);
   };
-
-  if (!user) {
-    return (
-      <div className="flex flex-col justify-center items-center h-screen">
-        <p className="text-2xl">
-          <Link href="/auth">Login</Link> to view this page
-        </p>
-      </div>
-    );
-  }
 
   return (
     <>
