@@ -53,7 +53,7 @@ const Register = () => {
 
         if (response) {
           setTimeout(() => {
-            router.push('/login');
+            router.push('/auth');
           });
         } else {
           setErrorMessage("Username or email already taken");

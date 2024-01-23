@@ -36,7 +36,7 @@ const Page = () => {
     };
 
     fetchData();
-  }, [user]);
+  }, []);
 
   const handleDelete = async (id: string) => {
     const response = deletePost(id);

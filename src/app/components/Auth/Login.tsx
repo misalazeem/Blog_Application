@@ -40,23 +40,30 @@ const Login = () => {
       return true;
     };
   
-    const submitForm = (event:FormEvent) => {
-      event.preventDefault()
+    const submitForm = async (event: FormEvent) => {
+    event.preventDefault();
 
-      signIn('credentials', {
-        ...loginForm,
-        redirect:false,
-        }).then((callback) => {
-          if(callback?.ok) {
-             router.refresh()
-          }
-
-          if(callback?.error) {
-            throw new Error('Wrong Credentials')
-          }
-        })
-      router.push('/')
+    if (!validateForm()) {
+        return;
     }
+
+    try {
+        const callback = await signIn('credentials', {
+        ...loginForm,
+        redirect: false,
+        });
+
+        if (callback?.ok) {
+        router.push('/');
+        } else if (callback?.error) {
+        throw new Error('Wrong Credentials');
+        }
+    } catch (error) {
+        console.error('Error during authentication:', error);
+        setErrorMessage('An error occurred during authentication.');
+    }
+    };
+
   
     return (
       <form className="text-center" onSubmit={submitForm}>

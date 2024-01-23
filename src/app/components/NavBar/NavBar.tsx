@@ -28,7 +28,7 @@ const NavBar = ({ currentUser }: UserMenuProps) => {
   return (
     <header className="sticky top-0 py-4 z-50 bg-gradient-to-r from-slate-100 via-fuchsia-100 to-teal-100 shadow-md">
       <nav className="container mx-auto flex justify-between items-center px-4 py-2">
-        <div className="text-xl font-bold">{currentUser?.username || "Guest"}</div>
+        <div className="text-xl font-bold">{currentUser?.name || "Guest"}</div>
         <div className="flex gap-6">
           <Link className="text-gray-700 hover:text-indigo-500 transition duration-300" href="/">
             Home
