@@ -11,6 +11,7 @@ export const createBlog = async (blogData: FormData) => {
 };
 
 export const getAllBlogs = async (categoryFilter:string, currentPage:string) => {
+  console.log("here");
   try {
     // Prepare query parameters
     const queryParams = new URLSearchParams();
