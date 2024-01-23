@@ -3,6 +3,7 @@
 import { getMyPosts, deletePost } from "@/lib/blogApi";
 import React, { useEffect, useState } from "react";
 import BlogPost from "../components/BlogPost/BlogPost";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 interface BlogData {
@@ -16,13 +17,20 @@ interface BlogData {
 }
 
 const MyPosts = () => {
-  let user:any = null;
-  if (typeof window !== 'undefined') {
-    user = JSON.parse(localStorage.getItem("user") as string) || {};
-  }
+  const [user, setUser] = useState<any | null>(null);
   const [blogData, setBlogData] = useState<BlogData[] | null>(null);
+  const router = useRouter();
 
-  
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedUser = JSON.parse(localStorage.getItem("user") as string) || null;
+      setUser(storedUser);      
+      if ( !storedUser ) {                
+        router.push('/');
+      }
+    }
+  }, []);
+
 
   useEffect(() => {
     const fetchData = async () => {
