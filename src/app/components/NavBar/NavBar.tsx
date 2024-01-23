@@ -38,19 +38,19 @@ const NavBar = ({ currentUser }: UserMenuProps) => {
   };
 
   return (
-    <header className="sticky top-0 py-4 z-50 bg-gradient-to-r from-slate-100 via-fuchsia-100 to-teal-100 shadow-md">
-      <nav className="container mx-auto flex justify-between items-center px-4 py-2">
-        <div className="text-xl font-bold">{currentUser?.name || "Guest"}</div>
+    <header className="sticky top-0 py-4 z-50 bg-gradient-to-r from-indigo-300 via-cyan-500 to-blue-500 shadow-md">
+      <nav className="container mx-auto flex justify-between items-center px-24">
+        <div className="text-xl font-bold text-white">{currentUser?.name || "Guest"}</div>
         <div className="lg:flex hidden gap-6">
-          <Link className="text-gray-700 hover:text-indigo-500 transition duration-300" href="/">
+          <Link className="text-white hover:text-indigo-200 transition duration-300" href="/">
             Home
           </Link>
           {currentUser ? (
             <>
-              <Link className="text-gray-700 hover:text-indigo-500 transition duration-300" href="/create-post">
+              <Link className="text-white hover:text-indigo-200 transition duration-300" href="/create-post">
                 Create
               </Link>
-              <Link className="text-gray-700 hover:text-indigo-500 transition duration-300" href="/my-posts">
+              <Link className="text-white hover:text-indigo-200 transition duration-300" href="/my-posts">
                 My Posts
               </Link>
               <button
@@ -61,7 +61,7 @@ const NavBar = ({ currentUser }: UserMenuProps) => {
               </button>
             </>
           ) : (
-            <Link className="text-gray-700 hover:text-indigo-500 transition duration-300" href="/auth">
+            <Link className="text-white hover:text-indigo-200 transition duration-300" href="/auth">
               Login/Register
             </Link>
           )}
@@ -69,7 +69,7 @@ const NavBar = ({ currentUser }: UserMenuProps) => {
         <div className="lg:hidden">
           <button
             onClick={toggleMenu}
-            className="text-gray-700 hover:text-indigo-500 transition duration-300 focus:outline-none"
+            className="text-white hover:text-indigo-200 transition duration-300 focus:outline-none"
           >
             ☰
           </button>
