@@ -20,6 +20,7 @@ const Login = () => {
     const router = useRouter();
     const [loginForm, setLoginForm] = useState(initialLoginForm);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
   
     const handleChange = (e: any) => {
       setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
@@ -53,7 +54,10 @@ const Login = () => {
         redirect: false,
         });
         if (callback?.ok) {
-        router.push('/');
+          setSuccessMessage('Login Successful!');
+          setTimeout(() => {
+            router.push('/');
+          }, 2500);
         } else if (callback?.error) {
         throw new Error('Wrong Credentials');
         }
@@ -83,6 +87,7 @@ const Login = () => {
             value={loginForm.password}
             name="password"
           />
+          {successMessage && <p className="text-green-500">{successMessage}</p>}
           {errorMessage && <p className="text-red-500">{errorMessage}</p>}
           <Button type="submit" customStyles="bg-blue-500 hover:bg-blue-600">Submit</Button>
         </div>

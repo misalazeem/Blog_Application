@@ -24,6 +24,7 @@ const Register = () => {
   const router = useRouter();
   const [registerForm, setRegisterForm] = useState(RegisterForm);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const handleChange = (e: any) => {
     setRegisterForm({ ...registerForm, [e.target.name]: e.target.value });
@@ -50,11 +51,14 @@ const Register = () => {
     if (validateForm()) {
       try {
         const response = await register(registerForm);
-
+        setRegisterForm(RegisterForm);
         if (response) {
-          setTimeout(() => {
-            router.push('/');
-          });
+            setSuccessMessage('Registeration Successful!');
+            
+            
+            setTimeout(() => {
+              router.push('/auth');
+            }, 2500);
         } else {
           setErrorMessage("Username or email already taken");
         }
@@ -100,6 +104,7 @@ const Register = () => {
           value={registerForm.password}
           name="password"
         />
+        {successMessage && <p className="text-green-500">{successMessage}</p>}
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
         <Button type="submit" customStyles="bg-blue-500 hover:bg-blue-600">
           Submit
