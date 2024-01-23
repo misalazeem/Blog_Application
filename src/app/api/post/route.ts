@@ -162,10 +162,13 @@ async function createNewPost(user: any, body: any) {
 }
 
 export async function GET(request: NextRequest, response: NextResponse) {
+  console.log('here');
   const queryString = request.url.split('?')[1];
   const queryParams = new URLSearchParams(queryString);
+  console.log(queryString);
   try {
     if (!queryParams.get("category")) {
+      console.log('hey');
       const page = queryParams.get('page');
       const skippost = page ? (+page - 1) * 3 : 0;
 
