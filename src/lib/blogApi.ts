@@ -39,7 +39,7 @@ export const getCategories = async () => {
 }
 
 export async function getBlogBySlug(slug: string) {
-  const title = slug.replace(/-/g, ' ');
+  const title = decodeURIComponent(slug.replace(/-/g, ' '));
   const request = {
     title,
   };
