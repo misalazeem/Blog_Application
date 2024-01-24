@@ -110,6 +110,8 @@ const CreateOrEditPost: React.FC<CreateOrEditPostProps> = ({ blog, onSubmit }) =
   
     if (!postForm.title.trim()) {
       errors.title = 'Title is required';
+    } else if (postForm.title.includes('_')) {
+      errors.title = 'Title cannot contain underscores';
     }
   
     if (!postContent.trim()) {
@@ -126,7 +128,6 @@ const CreateOrEditPost: React.FC<CreateOrEditPostProps> = ({ blog, onSubmit }) =
   
     setValidationErrors(errors);
   
-    // Check if there are any validation errors
     if (Object.keys(errors).length === 0) {
       const formData = new FormData();
       formData.append('title', postForm.title);

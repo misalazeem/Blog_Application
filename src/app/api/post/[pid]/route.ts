@@ -145,7 +145,7 @@ export async function GET(
         },
         },
     });
-
+    
     if (post) {
         const postWithAuthorAndCategoryNames = {
         ...post,

@@ -56,8 +56,7 @@ async function getPostsByAuthor(user: any, AuthorId: string) {
       orderBy: {
         createdAt: 'desc',
       }
-    });  
-
+    });
     const postsWithAuthorAndCategoryNames = posts.map((post) => ({
       ...post,
       author: {
@@ -73,10 +72,14 @@ async function getPostsByAuthor(user: any, AuthorId: string) {
 }
 
 async function getPostByTitle(title: string) {
+  const param = title.split('_');
   try {
     const post = await prisma.post.findFirst({
       where: {
-        title: title,
+        title: param[0],
+        author: {
+          name: param[1],
+        }
       },
       include: {
         author: {
