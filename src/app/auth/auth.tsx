@@ -23,7 +23,7 @@ const Auth: React.FC = () => {
           <div className="flex flex-row justify-around">
             <button
               className={`py-2 px-4 focus:outline-none ${
-                activeComponent === 'login' ? 'border-b-2 border-blue-500' : ''
+                activeComponent === 'login' ? 'border-b-2 border-black' : ''
               }`}
               onClick={() => setActiveComponent('login')}
             >
@@ -31,7 +31,7 @@ const Auth: React.FC = () => {
             </button>
             <button
               className={`py-2 px-4 focus:outline-none ${
-                activeComponent === 'register' ? 'border-b-2 border-blue-500' : ''
+                activeComponent === 'register' ? 'border-b-2 border-black' : ''
               }`}
               onClick={() => setActiveComponent('register')}
             >

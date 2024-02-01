@@ -24,7 +24,7 @@ const NavBar = ({ currentUser }: UserMenuProps) => {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
-  console.log(currentUser);
+
   if (typeof window !== 'undefined' && currentUser) {
     localStorage.setItem("user", JSON.stringify(currentUser));
   }
@@ -45,23 +45,23 @@ const NavBar = ({ currentUser }: UserMenuProps) => {
 
   const handleSignout = () => {
     localStorage.clear();
-    signOut();   
+    signOut();
   };
 
   return (
-    <header className="sticky top-0 py-4 z-50 bg-gradient-to-r from-indigo-300 via-cyan-500 to-blue-500 shadow-md">
-      <nav className="container mx-auto flex justify-between items-center px-24">
-        <div className="text-xl font-bold text-white">{currentUser?.name || "Guest"}</div>
-        <div className="lg:flex hidden gap-6">
-          <Link className="text-white hover:text-indigo-200 transition duration-300" href="/">
+    <header className="sticky top-0 bg-black px-8 py-6 z-50">
+      <nav className="container mx-auto flex justify-between items-center">
+        <div className="text-2xl font-bold text-white">{loggedInUser?.name || "Guest"}</div>
+        <div className="lg:flex flex flex-row justify-between items-center hidden gap-6">
+          <Link className="text-white hover:text-gray-300 transition duration-300" href="/">
             Home
           </Link>
-          {currentUser ? (
+          {loggedInUser ? (
             <>
-              <Link className="text-white hover:text-indigo-200 transition duration-300" href="/create-post">
+              <Link className="text-white hover:text-gray-300 transition duration-300" href="/create-post">
                 Create
               </Link>
-              <Link className="text-white hover:text-indigo-200 transition duration-300" href="/my-posts">
+              <Link className="text-white hover:text-gray-300 transition duration-300" href="/my-posts">
                 My Posts
               </Link>
               <button
@@ -72,7 +72,7 @@ const NavBar = ({ currentUser }: UserMenuProps) => {
               </button>
             </>
           ) : (
-            <Link className="text-white hover:text-indigo-200 transition duration-300" href="/auth">
+            <Link className="text-white hover:text-gray-300 transition duration-300" href="/auth">
               Login/Register
             </Link>
           )}
@@ -80,22 +80,22 @@ const NavBar = ({ currentUser }: UserMenuProps) => {
         <div className="lg:hidden">
           <button
             onClick={toggleMenu}
-            className="text-white hover:text-indigo-200 transition duration-300 focus:outline-none"
+            className="text-white hover:text-gray-300 transition duration-300 focus:outline-none"
           >
             ☰
           </button>
           {menuOpen && (
             <div className="absolute top-16 right-4 bg-white border rounded-md shadow-md p-4">
               <div className="flex flex-col gap-2">
-                <Link onClick={toggleMenu} className="text-gray-700 hover:text-indigo-500 transition duration-300" href="/" passHref>
+                <Link className="text-gray-700 hover:text-indigo-500 transition duration-300" onClick={toggleMenu} href="/">
                   Home
                 </Link>
-                {currentUser ? (
+                {loggedInUser ? (
                   <>
-                    <Link onClick={toggleMenu} className="text-gray-700 hover:text-indigo-500 transition duration-300" href="/create-post" passHref>
+                    <Link className="text-gray-700 hover:text-indigo-500 transition duration-300" onClick={toggleMenu} href="/create-post">
                       Create
                     </Link>
-                    <Link onClick={toggleMenu} className="text-gray-700 hover:text-indigo-500 transition duration-300" href="/my-posts" passHref>
+                    <Link className="text-gray-700 hover:text-indigo-500 transition duration-300" onClick={toggleMenu} href="/my-posts">
                       My Posts
                     </Link>
                     <button
@@ -106,7 +106,7 @@ const NavBar = ({ currentUser }: UserMenuProps) => {
                     </button>
                   </>
                 ) : (
-                  <Link onClick={toggleMenu} className="text-gray-700 hover:text-indigo-500 transition duration-300" href="/auth" passHref>
+                  <Link className="text-gray-700 hover:text-indigo-500 transition duration-300" onClick={toggleMenu} href="/auth">
                     Login/Register
                   </Link>
                 )}
