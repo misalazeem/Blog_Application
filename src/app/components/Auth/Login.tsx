@@ -56,42 +56,47 @@ const Login = () => {
         if (callback?.ok) {
           setSuccessMessage('Login Successful!');
           setTimeout(() => {
-            router.push('/');
+            //router.push('/');
+            location.reload();
           }, 2500);
         } else if (callback?.error) {
         throw new Error('Wrong Credentials');
         }
     } catch (error) {
-        console.error('Error during authentication:', error);
-        setErrorMessage('An error occurred during authentication.');
+        setErrorMessage(`${error}`);
     }
     };
 
   
     return (
-      <form className="text-center" onSubmit={submitForm}>
-        <div className="flex flex-col w-[90%] justify-center mx-auto gap-2">
-          <Input
-            placeholder='Username'
-            id='username'
-            type='text'
-            onChange={handleChange}
-            value={loginForm.username}
-            name="username"
-          />
-          <Input
-            placeholder='Password'
-            id='password'
-            type='password'
-            onChange={handleChange}
-            value={loginForm.password}
-            name="password"
-          />
-          {successMessage && <p className="text-green-500">{successMessage}</p>}
-          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-          <Button type="submit" customStyles="bg-blue-500 hover:bg-blue-600">Submit</Button>
-        </div>
-      </form>
+      <>
+        <form className="text-center" onSubmit={submitForm}>
+          <div className="flex flex-col p-8 w-[90%] justify-center mx-auto gap-2">
+            <h3 className="text-2xl mb-6 font-bold">Log In Your Account</h3>
+            <Input
+              placeholder='Username'
+              id='username'
+              type='text'
+              onChange={handleChange}
+              value={loginForm.username}
+              name="username"
+            />
+            <Input
+              placeholder='Password'
+              id='password'
+              type='password'
+              onChange={handleChange}
+              value={loginForm.password}
+              name="password"
+            />
+            {successMessage && <p className="text-green-500">{successMessage}</p>}
+            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+            <div className="items-center mt-4">
+              <Button type="submit" customStyles="bg-black w-[50%] hover:bg-gray-800">Submit</Button>
+            </div>
+          </div>
+        </form>
+      </>
     );
   };
   

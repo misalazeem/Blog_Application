@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { signOut } from "next-auth/react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 
 interface UserMenuProps {
   currentUser: {
@@ -18,12 +18,13 @@ interface UserMenuProps {
 
 const NavBar = ({ currentUser }: UserMenuProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState<UserMenuProps['currentUser'] | null>(currentUser);
   const router = useRouter();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
-
+  console.log(currentUser);
   if (typeof window !== 'undefined' && currentUser) {
     localStorage.setItem("user", JSON.stringify(currentUser));
   }
@@ -33,6 +34,14 @@ const NavBar = ({ currentUser }: UserMenuProps) => {
       localStorage.clear();
     }
   }
+
+  useEffect(() => {
+    if (currentUser) {
+      setLoggedInUser(currentUser);
+    } else {
+      setLoggedInUser(null);
+    }
+  }, [currentUser]);
 
   const handleSignout = () => {
     localStorage.clear();

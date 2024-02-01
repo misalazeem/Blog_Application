@@ -23,7 +23,7 @@ const Input = ({
   big,
   customStyles,
 }: InputProps) => {
-  const defaultStyles = `w-full p-4 pt-6 font-light bg-white border-2 outline-none text-black ${
+  const defaultStyles = `w-full p-2 font-light bg-white border-gray-300 border-2 outline-none text-black ${
     big ? "w-[480px] pb-[6rem]" : ""
   }`;
 

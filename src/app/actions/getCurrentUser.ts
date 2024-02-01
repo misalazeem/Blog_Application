@@ -28,7 +28,6 @@ export default async function getCurrentUser() {
 
     return currentUserWithoutPassword;
   } catch {
-    // Handle errors
     return null;
   }
 }
