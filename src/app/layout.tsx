@@ -23,8 +23,8 @@ export default async function RootLayout({
   const currentUser = await getCurrentUser();
   return (    
     <html lang="en">      
-      <body className="min-h-[100vh] bg-gradient-to-r from-slate-100 via-fuchsia-100 to-teal-100">
-        <div className="bg-gradient-to-r from-slate-100 via-fuchsia-100 to-teal-100">
+      <body className="min-h-[100vh] bg-body-background">
+        <div>
           <NavBar currentUser={currentUser}/>        
           {children}
         </div>

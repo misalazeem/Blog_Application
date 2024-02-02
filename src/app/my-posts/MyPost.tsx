@@ -22,6 +22,7 @@ const MyPosts = () => {
     user = JSON.parse(localStorage.getItem("user") as string) || {};
   }
   const [blogData, setBlogData] = useState<BlogData[] | null>(null);
+  const [customMessage, setCustomMessage] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -43,11 +44,24 @@ const MyPosts = () => {
     if(!user) {
       router.push('/');
     }
-    const response = deletePost(id);
+    const response = deletePost(id).then((data) => {
+      console.log(data);
+      setCustomMessage(data.data.message);
+      setTimeout(() => {
+        location.reload();
+      }, 2500);
+    }).catch((error) => {
+      setCustomMessage(error);
+    });
   };
 
   return (
     <>
+      {customMessage && 
+        <div className="custom-message-sticky p-4 bg-green-500 text-white sticky top-0 z-10">
+          {customMessage}
+        </div>
+      }
       <div className="flex flex-col items-center w-[80vw] mx-auto py-8 gap-4">
         {blogData && blogData.map((blog) => (
           <div key={blog.id} className="relative">

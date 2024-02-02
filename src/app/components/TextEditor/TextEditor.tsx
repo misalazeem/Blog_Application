@@ -12,14 +12,6 @@ interface TextEditorProps {
 
 const QuillEditor = dynamic(() => import('react-quill'), { ssr: false });
 
-const EditorWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 40vh;
-  align-items: center;
-  justify-content: center;
-`;
-
 const TextEditor: React.FC<TextEditorProps> = ({ initialValue, updateContent }) => {
   const [content, setContent] = useState('');
   const quillModules = {
@@ -57,13 +49,15 @@ const TextEditor: React.FC<TextEditorProps> = ({ initialValue, updateContent }) 
   };
 
   return (
+    <div className="h-[40vh] mt-10 overflow-y-auto">
       <QuillEditor
         defaultValue={initialValue}
         onChange={handleEditorChange}
         modules={quillModules}
         formats={quillFormats}
-        className="w-full min-h-[30vh] mt-10 bg-white"
+        className="w-full min-h-[30vh] bg-white overflow-y-auto"
       />
+    </div>
   );
 };
 

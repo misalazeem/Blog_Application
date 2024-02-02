@@ -63,8 +63,10 @@ const Page = () => {
           <>
       <div className="flex flex-col items-center w-[80vw] mx-auto py-8 gap-4">
         <select
+          className="py-2 px-4"
           onChange={(e) => setCategoryFilter(e.target.value || null)}
           value={categoryFilter || ""}
+          style={{ outline: "1px solid gray", outlineColor: "#333" }}
         >
           <option value="" disabled>
             Select Category
