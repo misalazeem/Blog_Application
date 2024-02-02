@@ -67,13 +67,12 @@ const MyPosts = () => {
         {blogData && blogData.length > 0 ? (
           blogData.map((blog) => (
             <div key={blog.id} className="relative">
-              {/* ... (existing code) */}
               <BlogPost blog={blog} />
             </div>
           ))
         ) : (
           <div className="flex flex-col items-center justify-center text-4xl font-bold">
-            You haven't posted anything
+            You havent posted anything
           </div>
         )}
       </div>
