@@ -57,24 +57,33 @@ const MyPosts = () => {
 
   return (
     <>
-      {customMessage && 
-        <div className="custom-message-sticky p-4 bg-green-500 text-white sticky top-0 z-10">
-          {customMessage}
-        </div>
-      }
-
-      <div className="flex flex-col items-center w-[80vw] mx-auto py-8 gap-4">
-        {blogData && blogData.length > 0 ? (
-          blogData.map((blog) => (
-            <div key={blog.id} className="relative">
+      <div className="mx-[10%]">
+        {customMessage && 
+          <div className="custom-message-sticky p-4 bg-green-500 text-white sticky top-0 z-10">
+            {customMessage}
+          </div>
+        }
+        <div className="w-[100vw] mt-8 flex flex-col justify-center items-center">
+          {blogData && blogData.map((blog) => (
+            <div key={blog.id} className="w-full mx-auto mb-8">
+              <div className="flex gap-4 items-center">
+                <button
+                  className="px-2 py-1 bg-red-500 text-white rounded"
+                  onClick={() => handleDelete(blog.id)}
+                >
+                  Delete
+                </button>
+                <Link
+                  className="px-2 py-1 bg-blue-500 text-white rounded"
+                  href={`/my-posts/update/${blog.id}`}
+                >
+                  Update
+                </Link>
+              </div>
               <BlogPost blog={blog} />
             </div>
-          ))
-        ) : (
-          <div className="flex flex-col items-center justify-center text-4xl font-bold">
-            You havent posted anything
-          </div>
-        )}
+          ))}
+        </div>
       </div>
     </>
   );
