@@ -1,11 +1,10 @@
-// Page.tsx
+'use client'
 
-"use client";
-
-import { getAllBlogs, getCategories } from "@/lib/blogApi";
-import React, { useEffect, useState } from "react";
-import BlogPost from "./components/BlogPost/BlogPost";
-import Loading from "./components/Loading/Loading";
+import React, { useEffect, useState } from 'react';
+import { getAllBlogs, getCategories } from '@/lib/blogApi';
+import Loading from './components/Loading/Loading';
+import FeaturedPost from './components/Home/FeaturedPost';
+import RecentPosts from './components/Home/RecentPosts';
 
 interface BlogData {
   id: string;
@@ -18,97 +17,35 @@ interface BlogData {
 }
 
 const Page = () => {
-  const [blogData, setBlogData] = useState<BlogData[] | null>(null);
-  const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [categories, setCategories] = useState<string[]>([]);
-  const [hasMorePages, setHasMorePages] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [featuredPost, setFeaturedPost] = useState<BlogData | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchFeaturedPost = async () => {
       try {
-        setLoading(true);
+        const data = await getAllBlogs('', '1');
 
-        const categoriesData = await getCategories();
-        if (categoriesData && categoriesData.success) {
-          setCategories(categoriesData.data);
-        }
-
-        const pagenumber: string = currentPage.toString();
-        const data = await getAllBlogs(categoryFilter || '', pagenumber || '');
-
-        if (data && data.data) {
-          setBlogData(data.data);
-          setHasMorePages(data.data.length >= 3);
-
-          if (data.data.length === 0 && currentPage > 1) {
-            setCurrentPage((prevPage) => prevPage - 1);
-          }
+        if (data && data.data && data.data.length > 0) {
+          setFeaturedPost(data.data[0]);
         }
       } catch (error) {
-      } finally {
-        setLoading(false);
+        
       }
     };
 
-    fetchData();
-  }, [categoryFilter, currentPage]);
+    fetchFeaturedPost();
+  }, []);
 
   return (
-    <>
-      {loading ? (
-        <div className="flex flex-col justify-between items-center"> <Loading /> </div>
-        ) : (
-          <>
-      <div className="flex flex-col items-center w-[80vw] mx-auto py-8 gap-4">
-        <select
-          className="py-2 px-4"
-          onChange={(e) => setCategoryFilter(e.target.value || null)}
-          value={categoryFilter || ""}
-          style={{ outline: "1px solid gray", outlineColor: "#333" }}
-        >
-          <option value="" disabled>
-            Select Category
-          </option>
-          <option value="" onClick={() => setCategoryFilter(null)}>
-            All Categories
-          </option>
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
-
-        
-            {blogData &&
-              blogData.map((blog) => <BlogPost key={blog.id} blog={blog} />)}
-
-            <div className="flex justify-between w-full mt-4">
-              <button
-                onClick={() =>
-                  setCurrentPage((prevPage) => Math.max(1, prevPage - 1))
-                }
-                disabled={currentPage === 1}
-              >
-                Previous
-              </button>
-              <button
-                onClick={() =>
-                  setCurrentPage((prevPage) =>
-                    hasMorePages ? prevPage + 1 : prevPage
-                  )
-                }
-                disabled={!hasMorePages}
-              >
-                Next
-              </button>
-            </div>                  
-      </div>
-      </>
+    <div className="mt-4">
+      {featuredPost ? (
+        <FeaturedPost blogs={[featuredPost]} title={''} categories={[]} content={''} imageUrl={''} author={{
+          name: ''
+        }} />
+      ) : (
+        <Loading />
       )}
-    </>
+      <RecentPosts />
+    </div>
   );
 };
 

@@ -33,17 +33,21 @@ const BlogPost: React.FC<BlogPostProps> = ({ blog }) => {
   const slug = generateSlug(title, author.name);
 
   return (
-    <div className="max-w-[80%] transition-opacity duration-500 ease-in-out">
+    <div className="flex w-[60%] justify-stretch items-stretch p-4 border border-gray-300 rounded shadow-md h-auto transition-opacity duration-500 ease-in-out lg:w-[30%] sm:w-[40%]">
       <Head>
         <title>{title}</title>
         <meta name="description" content={content?.slice(0, 150) + '...'} />
       </Head>
       <Link href={`/post/${encodeURIComponent(slug)}`}>
-        <div className="flex flex-col w-auto max-w-[100vw] lg:flex-row justify-between p-4 border border-gray-300 rounded shadow-md transition-transform duration-300 transform hover:scale-105">
-          <div className="lg:w-1/2 mb-4 lg:mb-0 lg:mr-4">
-            <img className="w-full h-auto object-cover rounded transition-transform duration-300 transform hover:scale-105" src={imageUrl} alt={title} />
+        <div className="flex flex-col w-full justify-betweentransition-transform duration-300 transform hover:scale-105">
+          <div className="w-full mb-4">
+            <img
+              className="w-full h-48 object-cover rounded transition-transform duration-300 transform hover:scale-105"
+              src={imageUrl}
+              alt={title}
+            />
           </div>
-          <div className="lg:w-1/2">
+          <div>
             <h4 className="text-xl font-semibold mb-2">{title}</h4>
             <div className="mb-2">
               <strong>Categories:</strong>{" "}
@@ -53,16 +57,13 @@ const BlogPost: React.FC<BlogPostProps> = ({ blog }) => {
                 </span>
               ))}
             </div>
-            <div className="mt-2" style={{ whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}>
-              <div dangerouslySetInnerHTML={{ __html: content?.slice(0, 350) + '...' }} />
-            </div>
             <Link
               className="text-blue-500 underline mt-2 cursor-pointer focus:outline-none transition-colors duration-300 hover:text-indigo-700"
               href={`/post/${encodeURIComponent(blog.title.replace(/\s+/g, '-'))}`}
             >
-              Read More
+              Read Post
             </Link>
-            <p className="text-gray-600 text-sm mt-2">
+            <p className="flex text-gray-600 text-sm mt-2">
               <span>Written by {author.name}</span>
               <span className="mx-2">|</span>
               <span>Posted: {new Date(createdAt).toLocaleDateString()}</span>

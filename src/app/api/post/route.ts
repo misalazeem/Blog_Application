@@ -170,7 +170,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
   try {
     if (!queryParams.get("category")) {
       const page = queryParams.get('page');
-      const skippost = page ? (+page - 1) * 3 : 0;
+      const skippost = page ? (+page - 1) * 6 : 0;
       const posts = await prisma.post.findMany({
         where: {
           published: true,
@@ -192,7 +192,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
         },
 
         skip: skippost,
-        take: 3,
+        take: 6,
       });
 
       const postsWithAuthorAndCategoryNames = posts.map((post) => ({
@@ -208,7 +208,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
       const category = queryParams.get('category')?.replace('+', '');
       const page = queryParams.get('page');
       if (category && page) {
-        const skippost = (+page - 1) * 3;
+        const skippost = (+page - 1) * 6;
 
         const posts = await prisma.post.findMany({
           where: {
@@ -237,7 +237,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
           },
 
           skip: skippost,
-          take: 3,
+          take: 6,
         });
 
         const postsWithAuthorAndCategoryNames = posts.map((post) => ({
